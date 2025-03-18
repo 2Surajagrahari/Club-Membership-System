@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club Membership System</title>
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        fadeIn: "fadeIn 2s ease-in-out",
+                        bounceSlow: "bounce 3s infinite"
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        @keyframes typing {
+            0% { width: 0ch; }
+            50% { width: 23ch; }
+            100% { width: 0ch; }
+        }
+    
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+    
+        .typing {
+            display: inline-block;
+            border-right: 8px solid white;
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 8s steps(20, end) infinite, blink 0.8s infinite;
+        }
+
+        html{
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold pl-5">ClubSphere</h1>
+            <ul class="flex pl-6 space-x-6 text-2xl">
+                <li><a href="#membership" class="">Membership</a></li>
+                <li><a href="#dues" class="">Dues</a></li>
+                <li><a href="#events" class="">Events</a></li>
+                <li><a href="#committees" class="">Committees</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- <button id="scrollToTop" class="fixed bottom-6 right-6 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition duration-300 hover:bg-blue-700">
+        ^
+    </button> -->
+    <!-- Hero Section -->
+    <section class="text-center py-20 h-screen animation-fadeIn bg-blue-500 text-white">
+        <div class="flex items-center justify-center h-screen flex-col">
+        <h2 class="text-6xl font-bold typing">Welcome to ClubSphere...!</h2>
+        <p class="mt-4 text-4xl">Join us today and be part of an amazing community.</p>
+        <a href="#membership" 
+   class="mt-6 inline-block bg-white text-blue-600 px-6 py-3 rounded-lg font-bold shadow-md hover:bg-gray-100 transition duration-300 relative group w-40 text-center">
+    <span class="inline-block transition-opacity duration-300 group-hover:opacity-0 applyButton">Apply Now</span>
+    <i class="fas fa-file-alt absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 text-2xl"></i>
+</a>
+        </div>
+    </section>
+
+    <!-- Why Join Us Section -->
+<section id="why-join" class="container mx-auto p-12 text-center bg-gray-200">
+    <h2 class="text-4xl font-bold mb-6">Why Join Us?</h2>
+    <span class="block w-20 h-2 bg-blue-500  mx-auto mb-2 rounded-full transition-transform duration-300 hover:w-24 hover:bg-blue-600"></span>
+    <p class="text-lg text-gray-600 mb-8">Be part of something bigger! Gain access to amazing opportunities and experiences.</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105">
+            <div class="text-blue-500 text-5xl mb-4">
+                <i class="fas fa-calendar-alt"></i> <!-- Font Awesome Icon -->
+            </div>
+            <h3 class="text-xl font-bold">Exclusive Events</h3>
+            <p class="mt-2 text-gray-600">Attend special club events, networking meetups, and skill-building workshops.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105">
+            <div class="text-blue-500 text-5xl mb-4">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3 class="text-xl font-bold">Strong Community</h3>
+            <p class="mt-2 text-gray-600">Connect with like-minded individuals and build lasting friendships.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105">
+            <div class="text-blue-500 text-5xl mb-4">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <h3 class="text-xl font-bold">Skill Development</h3>
+            <p class="mt-2 text-gray-600">Grow your leadership, teamwork, and communication skills.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105">
+            <div class="text-blue-500 text-5xl mb-4">
+                <i class="fas fa-award"></i>
+            </div>
+            <h3 class="text-xl font-bold">Recognition & Rewards</h3>
+            <p class="mt-2 text-gray-600">Get rewarded for your contributions and achievements in the club.</p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105">
+            <div class="text-blue-500 text-5xl mb-4">
+                <i class="fas fa-chalkboard-teacher"></i>
+            </div>
+            <h3 class="text-xl font-bold">Workshops & Training</h3>
+            <p class="mt-2 text-gray-600">Gain hands-on experience through industry-specific workshops.</p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105">
+            <div class="text-blue-500 text-5xl mb-4">
+                <i class="fas fa-handshake"></i>
+            </div>
+            <h3 class="text-xl font-bold">Career Opportunities</h3>
+            <p class="mt-2 text-gray-600">Get access to internships, job referrals, and professional guidance.</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- Membership Application -->
+    <section id="membership" class="w-full flex items-center justify-center px-10 py-12 bg-gray-100">
+
+    
+    <div class="container mx-auto flex flex-wrap lg:flex-nowrap items-center gap-10">
+        
+        <!-- Left: Form -->
+        <div class="bg-white bg-opacity-90 backdrop-blur-lg p-8 rounded-lg shadow-lg w-full lg:w-1/2 border border-gray-300">
+            <h2 class="text-3xl font-bold text-blue-600 mb-6 text-center">Membership Application</h2>
+            <span class="block w-20 h-1 bg-blue-500  mx-auto mb-2 rounded-full transition-transform duration-300 hover:w-24 hover:bg-blue-600"></span>
+            <label class="block mb-2 font-medium text-gray-700">Name</label>
+            <input type="text" class="w-full p-2 border rounded mb-4 focus:ring-2 focus:ring-blue-500" required>
+            
+            <label class="block mb-2 font-medium text-gray-700">Email</label>
+            <input type="email" class="w-full p-2 border rounded mb-4 focus:ring-2 focus:ring-blue-500" required>
+
+            <label class="block mb-2 font-medium text-gray-700">Why do you want to join?</label>
+            <textarea class="w-full p-2 border rounded mb-4 focus:ring-2 focus:ring-blue-500" required></textarea>
+            
+            <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-blue-700 transition duration-300 w-full flex items-center justify-center gap-2">
+                <i class="fas fa-paper-plane"></i> Submit
+            </button>
+        </div>
+
+        <!-- Right: Image -->
+        <div class="w-full lg:w-1/2 flex justify-center">
+            <img src="form.jpg" alt="Membership" class="max-w-full h-auto object-cover rounded-lg shadow-lg">
+        </div>
+
+    </div>
+</section>
+
+
+
+<!-- Dues Collection -->
+<section id="dues" class="w-full min-h-screen flex flex-col items-center justify-center bg-gray-100 px-6 py-12">
+    <h2 class="text-4xl font-extrabold text-blue-700 mb-4 ">Dues Collection</h2>
+    <span class="block w-20 h-2 bg-blue-500  mx-auto mb-2 rounded-full transition-transform duration-300 hover:w-24 hover:bg-blue-600"></span>
+    <p class="text-lg text-gray-700 mb-10 text-center max-w-2xl">
+        Securely manage and pay your membership dues. Choose a plan that suits you!
+    </p>
+
+    <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        
+        <!-- Basic Plan -->
+        <div class="bg-white p-8 rounded-lg shadow-lg text-center transform hover:scale-105 transition duration-300 relative">
+            <i class="fas fa-user text-blue-600 text-4xl absolute top-4 left-4"></i>
+            <h3 class="text-2xl font-semibold text-gray-800 mt-4">Basic Membership</h3>
+            <p class="text-lg text-gray-600 mt-2">$10 / Month</p>
+            <hr class="my-4">
+            <ul class="text-gray-600 space-y-2">
+                <li>✅ Access to events</li>
+                <li>✅ Monthly newsletter</li>
+                <li>❌ Priority support</li>
+            </ul>
+            <button class="mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 w-full flex items-center justify-center gap-2">
+                <i class="fas fa-credit-card"></i> Pay Now
+            </button>
+        </div>
+
+        <!-- Standard Plan (Highlighted) -->
+        <div class="bg-blue-600 text-white p-8 rounded-lg shadow-lg text-center transform hover:scale-105 transition duration-300 relative">
+            <span class="absolute top-4 right-4 bg-yellow-400 text-black text-xs px-3 py-1 rounded-full">Most Popular</span>
+            <i class="fas fa-star text-yellow-400 text-4xl absolute top-4 left-4"></i>
+            <h3 class="text-2xl font-semibold mt-4">Standard Membership</h3>
+            <p class="text-lg mt-2">$25 / Month</p>
+            <hr class="my-4 border-white">
+            <ul class="space-y-2">
+                <li>✅ Access to events</li>
+                <li>✅ Monthly newsletter</li>
+                <li>✅ Priority support</li>
+            </ul>
+            <button class="mt-6 bg-white text-blue-600 px-6 py-3 rounded-lg shadow-md hover:bg-gray-200 transition duration-300 w-full flex items-center justify-center gap-2">
+                <i class="fas fa-wallet"></i> Pay Now
+            </button>
+        </div>
+
+        <!-- Premium Plan -->
+        <div class="bg-white p-8 rounded-lg shadow-lg text-center transform hover:scale-105 transition duration-300 relative">
+            <i class="fas fa-crown text-yellow-500 text-4xl absolute top-4 left-4"></i>
+            <h3 class="text-2xl font-semibold text-gray-800 mt-4">Premium Membership</h3>
+            <p class="text-lg text-gray-600 mt-2">$50 / Month</p>
+            <hr class="my-4">
+            <ul class="text-gray-600 space-y-2">
+                <li>✅ All Standard features</li>
+                <li>✅ VIP event invitations</li>
+                <li>✅ 24/7 premium support</li>
+            </ul>
+            <button class="mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 w-full flex items-center justify-center gap-2">
+                <i class="fas fa-money-check-alt"></i> Pay Now
+            </button>
+        </div>
+
+    </div>
+</section>
+
+
+
+    <!-- Upcoming Events Section -->
+<section id="events" class="container mx-auto p-10 text-center">
+    <h2 class="text-4xl font-bold mb-6">🎉 Upcoming Events</h2>
+    <p class="text-lg text-gray-600 mb-10">Don't miss out on our exciting events! Join us and stay connected.</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Event 1 -->
+        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105">
+            <img src="annual sport.png" alt="Event 1" class="w-full h-40 object-cover rounded-md">
+            <h3 class="text-xl font-bold mt-4">🏆 Annual Sports Meet</h3>
+            <p class="text-gray-600">Join us for an exciting day of competitions and fun!</p>
+            <p class="text-blue-500 font-semibold mt-2">📅 April 10, 2025 | 📍 BH-4 Cricket Stadium</p>
+            <a href="#" class="block mt-4 text-white bg-blue-600 px-4 py-2 rounded-md hover:bg-blue-700">Register Now</a>
+        </div>
+
+        <!-- Event 2 -->
+        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105">
+            <img src="event2.png" alt="Event 2" class="w-full h-40 object-cover rounded-md">
+            <h3 class="text-xl font-bold mt-4">🎭 Cultural Night</h3>
+            <p class="text-gray-600">Experience a night of music, dance, and drama.</p>
+            <p class="text-blue-500 font-semibold mt-2">📅 May 15, 2025 | 📍 Unipolis</p>
+            <a href="#" class="block mt-4 text-white bg-blue-600 px-4 py-2 rounded-md hover:bg-blue-700">Join Us</a>
+        </div>
+
+        <!-- Event 3 -->
+        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105">
+            <img src="event3.png" alt="Event 3" class="w-full h-40 object-cover rounded-md">
+            <h3 class="text-xl font-bold mt-4">📢 Leadership Workshop</h3>
+            <p class="text-gray-600">Enhance your leadership skills with top mentors.</p>
+            <p class="text-blue-500 font-semibold mt-2">📅 June 5, 2025 | 📍 Shanti Devi Mittal Auditorium</p>
+            <a href="#" class="block mt-4 text-white bg-blue-600 px-4 py-2 rounded-md hover:bg-blue-700">Reserve Seat</a>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Committee Management Section -->
+<section id="committees" class="bg-gray-100 py-16">
+    <div class="container mx-auto text-center">
+        <h2 class="text-4xl font-bold text-gray-800 mb-4">Committee Management</h2>
+        <div class="w-20 h-1 bg-blue-600 mx-auto mb-8"></div>
+        <p class="text-lg text-gray-600 mb-12">Join a committee and contribute to the success of our club.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <!-- Committee 1 -->
+            <div class="relative bg-white rounded-lg shadow-lg overflow-hidden p-6 transition duration-300 transform hover:scale-105 hover:shadow-2xl">
+                <h3 class="text-2xl font-semibold text-gray-800">📢 Event Planning</h3>
+                <p class="text-gray-600 mt-2">Help organize and manage club events.</p>
+                <button class="mt-4 bg-blue-600 text-white px-5 py-2 rounded-md font-medium hover:bg-blue-700 transition duration-300">
+                    Join Now
+                </button>
+            </div>
+
+            <!-- Committee 2 -->
+            <div class="relative bg-white rounded-lg shadow-lg overflow-hidden p-6 transition duration-300 transform hover:scale-105 hover:shadow-2xl">
+                <h3 class="text-2xl font-semibold text-gray-800">🎨 Design & Marketing</h3>
+                <p class="text-gray-600 mt-2">Create posters and promote club activities.</p>
+                <button class="mt-4 bg-blue-600 text-white px-5 py-2 rounded-md font-medium hover:bg-blue-700 transition duration-300">
+                    Join Now
+                </button>
+            </div>
+
+            <!-- Committee 3 -->
+            <div class="relative bg-white rounded-lg shadow-lg overflow-hidden p-6 transition duration-300 transform hover:scale-105 hover:shadow-2xl">
+                <h3 class="text-2xl font-semibold text-gray-800">💼 Finance & Budgeting</h3>
+                <p class="text-gray-600 mt-2">Manage club funds and financial planning.</p>
+                <button class="mt-4 bg-blue-600 text-white px-5 py-2 rounded-md font-medium hover:bg-blue-700 transition duration-300">
+                    Join Now
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+<button id="scrollToTop" class="fixed bottom-6 right-6 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition duration-300 hover:bg-blue-700">
+    ^
+</button>
+
+
+    <!-- Footer -->
+    <footer class="bg-blue-600 text-white text-center p-4 mt-6">
+        <p>&copy; 2025 Club Membership System</p>
+    </footer>
+    <script src="index.js"></script>
+</body>
+</html>

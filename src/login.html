@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Sign Up</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
+    <style>
+        /* Background Animation */
+        body {
+            background: linear-gradient(-45deg, #3b82f6, #6366f1, #14b8a6, #06b6d4);
+            background-size: 400% 400%;
+            animation: gradientBG 8s ease infinite;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        html{
+            scroll-behavior: smooth;
+        }
+
+        /* Smooth form transition */
+        .hidden { display: none; }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Input Field Glow Effect */
+        input:focus {
+            outline: none;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.6);
+        }
+
+        /* Button Hover Glow */
+        .glow-btn:hover {
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.7);
+        }
+
+
+#preloader {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 9999;
+        }
+
+        
+        .spin {
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            border-radius: 50%;
+            display: inline-block;
+            animation: spin 1.2s linear infinite;
+        }
+        
+        
+        .spin1 { background-color: #1e3a8a; animation-delay: -0.3s; } 
+        .spin2 { background-color: #3b82f6; animation-delay: -0.6s; } 
+        .spin3 { background-color: #facc15; animation-delay: -0.9s; }
+
+        
+        @keyframes spin {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+        }
+
+        
+        .fade-out {
+            opacity: 0;
+            transition: opacity 1s ease-out;
+            pointer-events: none;
+        }
+
+    </style>
+</head>
+<body class="bg-white flex items-center justify-center min-h-screen">
+    <!-- Preloader -->
+    <!-- <div id="preloader">
+        <div class="flex">
+            <div class="spin spin1"></div>
+            <div class="spin spin2"></div>
+            <div class="spin spin3"></div>
+        </div>
+        <h1 class="mt-4 text-xl font-bold text-blue-600">ClubSphere</h1>
+    </div>
+    <div class="bg-white p-8 rounded-lg shadow-2xl w-96 text-center transition-transform transform hover:scale-105"> -->
+
+        <!-- Login Form -->
+         <!-- <div class="hidden" id="main-content"> -->
+        <div id="loginForm" class="fade-in">
+            <h2 class="text-3xl font-bold mb-4 text-blue-700">Login</h2>
+            
+            <div class="relative mb-3">
+                <input type="email" placeholder="Email" class="w-full p-3 border rounded-full shadow-sm focus:ring-2 focus:ring-blue-300">
+                <i class="fas fa-envelope absolute right-4 top-4 text-gray-400"></i>
+            </div>
+
+            <div class="relative mb-3">
+                <input type="password" placeholder="Password" class="w-full p-3 border rounded-full shadow-sm focus:ring-2 focus:ring-blue-300">
+                <i class="fas fa-lock absolute right-4 top-4 text-gray-400"></i>
+            </div>
+
+            <button class="bg-blue-600 text-white w-full p-3 rounded-full shadow-md hover:bg-blue-700 transition duration-300">Login</button>
+
+            <div class="flex justify-center space-x-4 mt-4">
+                <button class=" p-3 rounded-full hover:bg-gray-200">
+                    <i class="fab fa-google text-red-500 text-xl"></i>
+                </button>
+                <button class=" p-3 rounded-full hover:bg-gray-200">
+                    <i class="fab fa-facebook text-blue-600 text-xl"></i>
+                </button>
+            </div>
+
+            <p class="mt-4 text-gray-600">Don't have an account? 
+                <a href="#" onclick="toggleForm()" class="text-blue-600 hover:underline">Sign Up</a>
+            </p>
+        </div>
+        <!-- </div> -->
+
+
+        <!-- Sign Up Form (Initially Hidden) -->
+        <div id="signUpForm" class="hidden fade-in">
+            <h2 class="text-3xl font-bold mb-4 text-green-700">Sign Up</h2>
+
+            <div class="relative mb-3">
+                <input type="text" placeholder="Full Name" class="w-full p-3 border rounded-full shadow-sm focus:ring-2 focus:ring-green-300">
+                <i class="fas fa-user absolute right-4 top-4 text-gray-400"></i>
+            </div>
+
+            <div class="relative mb-3">
+                <input type="email" placeholder="Email" class="w-full p-3 border rounded-full shadow-sm focus:ring-2 focus:ring-green-300">
+                <i class="fas fa-envelope absolute right-4 top-4 text-gray-400"></i>
+            </div>
+
+            <div class="relative mb-3">
+                <input type="password" placeholder="Password" class="w-full p-3 border rounded-full shadow-sm focus:ring-2 focus:ring-green-300">
+                <i class="fas fa-lock absolute right-4 top-4 text-gray-400"></i>
+            </div>
+
+            <button class="bg-green-600 text-white w-full p-3 rounded-full shadow-md hover:bg-green-700 transition duration-300">Sign Up</button>
+
+            <div class="flex justify-center space-x-4 mt-4">
+                <button class=" p-3 rounded-full hover:bg-gray-200">
+                    <i class="fab fa-google text-red-500 text-xl"></i>
+                </button>
+                <button class=" p-3 rounded-full hover:bg-gray-200">
+                    <i class="fab fa-facebook text-blue-600 text-xl"></i>
+                </button>
+            </div>
+
+            <p class="mt-4 text-gray-600">Already have an account? 
+                <a href="#" onclick="toggleForm()" class="text-blue-600 hover:underline">Login</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function toggleForm() {
+            document.getElementById("loginForm").classList.toggle("hidden");
+            document.getElementById("signUpForm").classList.toggle("hidden");
+        }
+    </script>
+</body>
+</html>

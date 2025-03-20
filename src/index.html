@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Club Membership System</title>
+    <title>ClubSphere-Club Membership System</title>
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
     <!-- Font Awesome CDN -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -49,21 +49,138 @@
         html{
             scroll-behavior: smooth;
         }
+
+         /* Preloader Fullscreen */
+        #preloader {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 9999;
+        }
+
+        /* Spinner Animation */
+        .spin {
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            border-radius: 50%;
+            display: inline-block;
+            animation: spin 1.2s linear infinite;
+        }
+        
+        /* Different Colors */
+        .spin1 { background-color: #1e3a8a; animation-delay: -0.3s; } /* Dark Blue */
+        .spin2 { background-color: #3b82f6; animation-delay: -0.6s; } /* Light Blue */
+        .spin3 { background-color: #facc15; animation-delay: -0.9s; } /* Yellow */
+
+        /* Keyframes for Rotation */
+        @keyframes spin {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+        }
+
+        /* Fade-out effect */
+        .fade-out {
+            opacity: 0;
+            transition: opacity 1s ease-out;
+            pointer-events: none;
+        }
+
+         /* ClubSphere Text Animation */
+        .animated-text {
+            display: flex;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1e3a8a;
+        }
+
+        .letter {
+            display: inline-block;
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+
+        /* Apply different animation delays for each letter */
+        .letter:nth-child(1) { animation-delay: 0s; }
+        .letter:nth-child(2) { animation-delay: 0.1s; }
+        .letter:nth-child(3) { animation-delay: 0.2s; }
+        .letter:nth-child(4) { animation-delay: 0.3s; }
+        .letter:nth-child(5) { animation-delay: 0.4s; }
+        .letter:nth-child(6) { animation-delay: 0.5s; }
+        .letter:nth-child(7) { animation-delay: 0.6s; }
+        .letter:nth-child(8) { animation-delay: 0.7s; }
+        .letter:nth-child(9) { animation-delay: 0.8s; }
+        .letter:nth-child(10) { animation-delay: 0.9s; }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
     </style>
 </head>
 <body class="bg-gray-100">
-    <!-- Navbar -->
-    <nav class="bg-blue-600 text-white p-4 shadow-lg">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold pl-5">ClubSphere</h1>
-            <ul class="flex pl-6 space-x-6 text-2xl">
-                <li><a href="#membership" class="">Membership</a></li>
-                <li><a href="#dues" class="">Dues</a></li>
-                <li><a href="#events" class="">Events</a></li>
-                <li><a href="#committees" class="">Committees</a></li>
-            </ul>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="flex">
+            <div class="spin spin1"></div>
+            <div class="spin spin2"></div>
+            <div class="spin spin3"></div>
         </div>
-    </nav>
+        <h1 class="mt-4 animated-text">
+            <span class="letter">C</span>
+            <span class="letter">l</span>
+            <span class="letter">u</span>
+            <span class="letter">b</span>
+            <span class="letter">S</span>
+            <span class="letter">p</span>
+            <span class="letter">h</span>
+            <span class="letter">e</span>
+            <span class="letter">r</span>
+            <span class="letter">e</span>
+        </h1>
+    </div>
+
+ <!-- Navbar -->
+<nav class="bg-blue-600 text-white p-4 shadow-lg hidden" id="main-content">
+    <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-4xl font-bold pl-5">ClubSphere</h1>
+        <ul class="flex pl-6 space-x-6 text-2xl">
+            <li class="relative group">
+                <a href="#membership" class="relative pb-2 hover:text-gray-200 transition">
+                    Membership
+                    <span class="absolute left-1/2 bottom-0 w-0 h-1 bg-white rounded-full transition-all duration-300 ease-in-out transform -translate-x-1/2 group-hover:w-full"></span>
+                </a>
+            </li>
+            <li class="relative group">
+                <a href="#dues" class="relative pb-2 hover:text-gray-200 transition">
+                    Dues
+                    <span class="absolute left-1/2 bottom-0 w-0 h-1 bg-white rounded-full transition-all duration-300 ease-in-out transform -translate-x-1/2 group-hover:w-full"></span>
+                </a>
+            </li>
+            <li class="relative group">
+                <a href="#events" class="relative pb-2 hover:text-gray-200 transition">
+                    Events
+                    <span class="absolute left-1/2 bottom-0 w-0 h-1 bg-white rounded-full transition-all duration-300 ease-in-out transform -translate-x-1/2 group-hover:w-full"></span>
+                </a>
+            </li>
+            <li class="relative group">
+                <a href="#committees" class="relative pb-2 hover:text-gray-200 transition">
+                    Committees
+                    <span class="absolute left-1/2 bottom-0 w-0 h-1 bg-white rounded-full transition-all duration-300 ease-in-out transform -translate-x-1/2 group-hover:w-full"></span>
+                </a>
+            </li>
+        </ul>
+        <button class="btn ml-4" onclick="toggleForm()">Login / Sign Up</button>
+    </div>
+</nav>
+
+
+
     <!-- <button id="scrollToTop" class="fixed bottom-6 right-6 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition duration-300 hover:bg-blue-700">
         ^
     </button> -->
@@ -315,7 +432,7 @@
         </div>
     </div>
 </section>
-<button id="scrollToTop" class="fixed bottom-6 right-6 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition duration-300 hover:bg-blue-700">
+<button id="scrollToTop" class="fixed bottom-6 right-6 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition duration-300 shadow-[0px_5px_15px_rgba(0,0,0,0.35)] p-6  hover:bg-blue-700">
     ^
 </button>
 

@@ -21,3 +21,5 @@ const scrollToTopBtn = document.getElementById("scrollToTop");
             document.getElementById("main-content").classList.remove("hidden");
         }, 2000); // Preloader duration
     };
+
+    

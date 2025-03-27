@@ -104,7 +104,11 @@
             animation: bounce 1.5s infinite ease-in-out;
         }
 
-        /* Apply different animation delays for each letter */
+        .nav{
+            backdrop-filter: blur(10px);
+            background-color: black;
+            backface-visibility: visible;
+        }
         .letter:nth-child(1) { animation-delay: 0s; }
         .letter:nth-child(2) { animation-delay: 0.1s; }
         .letter:nth-child(3) { animation-delay: 0.2s; }
@@ -146,56 +150,134 @@
     </div>
 
  <!-- Navbar -->
-<nav class="bg-blue-600 text-white p-4 shadow-lg hidden" id="main-content">
+<nav class="fixed top-0 left-0 w-full z-50 bg-black bg-opacity-50 backdrop-blur-md text-white p-4 shadow-lg transition-all duration-300">
     <div class="container mx-auto flex justify-between items-center">
-        <h1 class="text-4xl font-bold pl-5">ClubSphere</h1>
-        <ul class="flex pl-6 space-x-6 text-2xl">
+        
+        <!-- Logo -->
+        <h1 class="text-4xl font-bold pl-5 hover:text-gray-300 transition duration-300">
+            ClubSphere
+        </h1>
+
+        <!-- Navigation Links -->
+        <ul class="hidden md:flex pl-6 space-x-6 text-2xl gap-4">
             <li class="relative group">
-                <a href="#membership" class="relative pb-2 hover:text-gray-200 transition">
+                <a href="#membership" class="relative pb-2 hover:text-blue-300 transition">
                     Membership
                     <span class="absolute left-1/2 bottom-0 w-0 h-1 bg-white rounded-full transition-all duration-300 ease-in-out transform -translate-x-1/2 group-hover:w-full"></span>
                 </a>
             </li>
             <li class="relative group">
-                <a href="#dues" class="relative pb-2 hover:text-gray-200 transition">
+                <a href="#dues" class="relative pb-2 hover:text-blue-300 transition">
                     Dues
                     <span class="absolute left-1/2 bottom-0 w-0 h-1 bg-white rounded-full transition-all duration-300 ease-in-out transform -translate-x-1/2 group-hover:w-full"></span>
                 </a>
             </li>
             <li class="relative group">
-                <a href="#events" class="relative pb-2 hover:text-gray-200 transition">
+                <a href="#events" class="relative pb-2 hover:text-blue-300 transition">
                     Events
                     <span class="absolute left-1/2 bottom-0 w-0 h-1 bg-white rounded-full transition-all duration-300 ease-in-out transform -translate-x-1/2 group-hover:w-full"></span>
                 </a>
             </li>
             <li class="relative group">
-                <a href="#committees" class="relative pb-2 hover:text-gray-200 transition">
+                <a href="#committees" class="relative pb-2 hover:text-blue-300 transition">
                     Committees
                     <span class="absolute left-1/2 bottom-0 w-0 h-1 bg-white rounded-full transition-all duration-300 ease-in-out transform -translate-x-1/2 group-hover:w-full"></span>
                 </a>
             </li>
         </ul>
-        <button class="btn ml-4" onclick="toggleForm()">Login / Sign Up</button>
+
+        <!-- Login Button -->
+        <button class="px-5 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-lg font-semibold rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300 flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-right-to-bracket text-xl"></i>
+            <a href="login.html" class="ml-2">Login / Sign Up</a>
+        </button>
+
+        <!-- Mobile Menu Button -->
+        <button id="menu-toggle" class="text-white text-2xl md:hidden focus:outline-none ml-4">
+            ☰
+        </button>
+    </div>
+
+    <!-- Mobile Menu (Hidden by Default) -->
+    <div id="mobile-menu" class="hidden md:hidden absolute top-16 left-0 w-full bg-black bg-opacity-80 text-center py-4">
+        <a href="#membership" class="block py-2 text-white text-lg hover:bg-blue-500">Membership</a>
+        <a href="#dues" class="block py-2 text-white text-lg hover:bg-blue-500">Dues</a>
+        <a href="#events" class="block py-2 text-white text-lg hover:bg-blue-500">Events</a>
+        <a href="#committees" class="block py-2 text-white text-lg hover:bg-blue-500">Committees</a>
     </div>
 </nav>
 
+<script>
+    // Toggle Mobile Menu
+    document.getElementById("menu-toggle").addEventListener("click", function () {
+        document.getElementById("mobile-menu").classList.toggle("hidden");
+    });
+</script>
 
 
-    <!-- <button id="scrollToTop" class="fixed bottom-6 right-6 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition duration-300 hover:bg-blue-700">
-        ^
-    </button> -->
-    <!-- Hero Section -->
-    <section class="text-center py-20 h-screen animation-fadeIn bg-blue-500 text-white">
-        <div class="flex items-center justify-center h-screen flex-col">
-        <h2 class="text-6xl font-bold typing">Welcome to ClubSphere...!</h2>
-        <p class="mt-4 text-4xl">Join us today and be part of an amazing community.</p>
+
+
+    <!-- Hero Section with Poster Slideshow -->
+<section class="relative h-screen w-full overflow-hidden">
+    <!-- Poster Slideshow Container -->
+    <div id="posterSlideshow" class="absolute inset-0 w-full h-full bg-black">
+        <!-- Posters will be inserted dynamically -->
+    </div>
+
+    <!-- Overlay Content (Welcome Message + Button) -->
+    <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white z-10">
+        <h2 class="text-6xl font-bold drop-shadow-lg typing">Welcome to ClubSphere...!</h2>
+        <p class="mt-4 text-3xl drop-shadow-lg">Join us today and be part of an amazing community</p>
         <a href="#membership" 
-   class="mt-6 inline-block bg-white text-blue-600 px-6 py-3 rounded-lg font-bold shadow-md hover:bg-gray-100 transition duration-300 relative group w-40 text-center">
-    <span class="inline-block transition-opacity duration-300 group-hover:opacity-0 applyButton">Apply Now</span>
-    <i class="fas fa-file-alt absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 text-2xl"></i>
-</a>
-        </div>
-    </section>
+           class="mt-6 inline-block bg-white text-blue-600 px-6 py-3 rounded-lg font-bold shadow-md hover:bg-gray-100 transition duration-300 relative group w-40 text-center">
+            <span class="inline-block transition-opacity duration-300 group-hover:opacity-0 applyButton">Apply Now</span>
+            <i class="fas fa-file-alt absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 text-2xl"></i>
+        </a>
+    </div>
+</section>
+
+<script>
+    let posters = JSON.parse(localStorage.getItem("posters")) || [];
+    let slideshow = document.getElementById("posterSlideshow");
+
+    function loadPostersFullScreen() {
+        if (posters.length === 0) {
+            slideshow.innerHTML = `<div class="w-full h-full flex items-center justify-center text-white text-2xl">No posters available yet.</div>`;
+            return;
+        }
+
+        slideshow.innerHTML = ""; // Clear previous content
+
+        posters.forEach((poster, index) => {
+            let slide = document.createElement("div");
+            slide.classList.add("absolute", "inset-0", "w-full", "h-full", "opacity-0", "transition-opacity", "duration-1000");
+            
+            slide.style.background = `url('${poster.image}') center/cover no-repeat`;
+            slide.style.zIndex = index;
+
+            slideshow.appendChild(slide);
+        });
+
+        startSlideshow();
+    }
+
+    let index = 0;
+    function startSlideshow() {
+        let slides = slideshow.children;
+        if (slides.length === 0) return;
+
+        slides[index].classList.add("opacity-100");
+
+        setInterval(() => {
+            slides[index].classList.remove("opacity-100");
+            index = (index + 1) % slides.length;
+            slides[index].classList.add("opacity-100");
+        }, 5000); // Change slide every 5 seconds
+    }
+
+    document.addEventListener("DOMContentLoaded", loadPostersFullScreen);
+</script>
+
 
     <!-- Why Join Us Section -->
 <section id="why-join" class="container mx-auto p-12 text-center bg-gray-200">
@@ -317,7 +399,7 @@
                 <li>❌ Priority support</li>
             </ul>
             <button class="mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 w-full flex items-center justify-center gap-2">
-                <i class="fas fa-credit-card"></i> Pay Now
+                <a href="pay.html"><i class="fas fa-credit-card"></i>Pay Now</a>
             </button>
         </div>
 
@@ -334,7 +416,7 @@
                 <li>✅ Priority support</li>
             </ul>
             <button class="mt-6 bg-white text-blue-600 px-6 py-3 rounded-lg shadow-md hover:bg-gray-200 transition duration-300 w-full flex items-center justify-center gap-2">
-                <i class="fas fa-wallet"></i> Pay Now
+                <a href="pay.html"><i class="fas fa-credit-card"></i>Pay Now</a>
             </button>
         </div>
 
@@ -350,7 +432,7 @@
                 <li>✅ 24/7 premium support</li>
             </ul>
             <button class="mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 w-full flex items-center justify-center gap-2">
-                <i class="fas fa-money-check-alt"></i> Pay Now
+                <a href="pay.html"><i class="fas fa-credit-card"></i>Pay Now</a>
             </button>
         </div>
 
@@ -360,39 +442,55 @@
 
 
     <!-- Upcoming Events Section -->
-<section id="events" class="container mx-auto p-10 text-center">
-    <h2 class="text-4xl font-bold mb-6">🎉 Upcoming Events</h2>
-    <p class="text-lg text-gray-600 mb-10">Don't miss out on our exciting events! Join us and stay connected.</p>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Event 1 -->
-        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105">
-            <img src="annual sport.png" alt="Event 1" class="w-full h-40 object-cover rounded-md">
-            <h3 class="text-xl font-bold mt-4">🏆 Annual Sports Meet</h3>
-            <p class="text-gray-600">Join us for an exciting day of competitions and fun!</p>
-            <p class="text-blue-500 font-semibold mt-2">📅 April 10, 2025 | 📍 BH-4 Cricket Stadium</p>
-            <a href="#" class="block mt-4 text-white bg-blue-600 px-4 py-2 rounded-md hover:bg-blue-700">Register Now</a>
+    <section id="events" class="container mx-auto p-10 text-center">
+        <h2 class="text-4xl font-bold mb-6">🎉 Upcoming Events</h2>
+        <p class="text-lg text-gray-600 mb-10">Don't miss out on our exciting events! Join us and stay connected.</p>
+    
+        <div id="upcomingEvents" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Events will be loaded here dynamically -->
         </div>
+    </section>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            loadEvents();
+        });
+    
+        function loadEvents() {
+            let events = JSON.parse(localStorage.getItem("events")) || [];
+            let today = new Date().toISOString().split("T")[0];
+    
+            // Remove past events
+            events = events.filter(event => event.date >= today);
+            localStorage.setItem("events", JSON.stringify(events));
+    
+            let eventContainer = document.getElementById("upcomingEvents");
+            eventContainer.innerHTML = ""; // Clear old events
+    
+            if (events.length === 0) {
+                eventContainer.innerHTML = "<p class='text-center text-gray-500 col-span-3'>No upcoming events.</p>";
+                return;
+            }
+    
+            events.forEach(event => {
+                let eventCard = document.createElement("div");
+                eventCard.classList.add("bg-white", "p-6", "rounded-lg", "shadow-lg", "hover:shadow-2xl", "transition", "duration-300", "transform", "hover:scale-105");
+    
+                eventCard.innerHTML = `
+                    <img src="${event.image}" alt="Event Image" class="w-full h-40 object-cover rounded-md">
+                    <h3 class="text-xl font-bold mt-4">${event.title}</h3>
+                    <p class="text-gray-600">${event.description}</p>
+                    <p class="text-blue-500 font-semibold mt-2">📅 ${event.date} | 📍 ${event.location}</p>
+                    <a href="register.html" class="block mt-4 text-white bg-blue-600 px-4 py-2 rounded-md hover:bg-blue-700">Register Now</a>
+                `;
+    
+                eventContainer.appendChild(eventCard);
+            });
+        }
+    </script>
+    
 
-        <!-- Event 2 -->
-        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105">
-            <img src="event2.png" alt="Event 2" class="w-full h-40 object-cover rounded-md">
-            <h3 class="text-xl font-bold mt-4">🎭 Cultural Night</h3>
-            <p class="text-gray-600">Experience a night of music, dance, and drama.</p>
-            <p class="text-blue-500 font-semibold mt-2">📅 May 15, 2025 | 📍 Unipolis</p>
-            <a href="#" class="block mt-4 text-white bg-blue-600 px-4 py-2 rounded-md hover:bg-blue-700">Join Us</a>
-        </div>
 
-        <!-- Event 3 -->
-        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105">
-            <img src="event3.png" alt="Event 3" class="w-full h-40 object-cover rounded-md">
-            <h3 class="text-xl font-bold mt-4">📢 Leadership Workshop</h3>
-            <p class="text-gray-600">Enhance your leadership skills with top mentors.</p>
-            <p class="text-blue-500 font-semibold mt-2">📅 June 5, 2025 | 📍 Shanti Devi Mittal Auditorium</p>
-            <a href="#" class="block mt-4 text-white bg-blue-600 px-4 py-2 rounded-md hover:bg-blue-700">Reserve Seat</a>
-        </div>
-    </div>
-</section>
 
 
     <!-- Committee Management Section -->
@@ -407,8 +505,8 @@
             <div class="relative bg-white rounded-lg shadow-lg overflow-hidden p-6 transition duration-300 transform hover:scale-105 hover:shadow-2xl">
                 <h3 class="text-2xl font-semibold text-gray-800">📢 Event Planning</h3>
                 <p class="text-gray-600 mt-2">Help organize and manage club events.</p>
-                <button class="mt-4 bg-blue-600 text-white px-5 py-2 rounded-md font-medium hover:bg-blue-700 transition duration-300">
-                    Join Now
+                <button class="mt-4 bg-blue-600 text-white px-5 py-2 rounded-md font-medium hover:bg-blue-700 transition duration-300"><a href="event_planning.html">
+                    Join Now</a>
                 </button>
             </div>
 
@@ -417,7 +515,7 @@
                 <h3 class="text-2xl font-semibold text-gray-800">🎨 Design & Marketing</h3>
                 <p class="text-gray-600 mt-2">Create posters and promote club activities.</p>
                 <button class="mt-4 bg-blue-600 text-white px-5 py-2 rounded-md font-medium hover:bg-blue-700 transition duration-300">
-                    Join Now
+                    <a href="design.html">Join Now</a>
                 </button>
             </div>
 
@@ -432,15 +530,52 @@
         </div>
     </div>
 </section>
-<button id="scrollToTop" class="fixed bottom-6 right-6 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition duration-300 shadow-[0px_5px_15px_rgba(0,0,0,0.35)] p-6  hover:bg-blue-700">
+<button id="scrollToTop" class="fixed bottom-6 right-6 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center  transition duration-300 shadow-[0px_5px_15px_rgba(0,0,0,0.35)] p-6  hover:bg-blue-700">
     ^
 </button>
 
 
-    <!-- Footer -->
-    <footer class="bg-blue-600 text-white text-center p-4 mt-6">
-        <p>&copy; 2025 Club Membership System</p>
-    </footer>
+<footer class="bg-blue-500 text-white py-8 mt-10">
+    <div class="container mx-auto flex flex-col md:flex-row items-center justify-between px-6">
+
+        <!-- Left Side: Contact Info & Copyright -->
+        <div class="text-left space-y-3">
+            <p class="flex items-center space-x-2 text-sm">
+                <i class="fas fa-envelope text-lg text-yellow-300"></i>
+                <span class="hover:text-yellow-300 transition duration-300">support@clubsphere.com</span>
+            </p>
+            <p class="flex items-center space-x-2 text-sm">
+                <i class="fas fa-map-marker-alt text-lg text-red-300"></i>
+                <span class="hover:text-red-300 transition duration-300">123 Tech Street, Innovation City</span>
+            </p>
+            <p class="text-lg mt-2">&copy; 2025 ClubSphere. All rights reserved.</p>
+        </div>
+
+        <!-- Center: Website Name & Slogan -->
+        <div class="text-center">
+            <h2 class="text-3xl font-bold tracking-wide">ClubSphere</h2>
+            <p class="text-lg mt-2">Connect • Collaborate • Create</p>
+        </div>
+
+        <!-- Right Side: Social Media Icons -->
+        <div class="flex space-x-6 pr-12">
+            <a href="#" class="text-white text-xl transition-transform transform hover:scale-125">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="#" class="text-white text-xl transition-transform transform hover:scale-125">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="text-white text-xl transition-transform transform hover:scale-125">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="text-white text-xl transition-transform transform hover:scale-125">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        </div>
+
+    </div>
+</footer>
+
     <script src="index.js"></script>
 </body>
 </html>

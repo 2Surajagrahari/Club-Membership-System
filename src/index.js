@@ -22,4 +22,44 @@ const scrollToTopBtn = document.getElementById("scrollToTop");
         }, 2000); // Preloader duration
     };
 
+
+    const texts = [
+        "Welcome to ClubSphere...!",
+        "Empowering the Future of Clubs",
+        "Join Us and Unleash Your Potential",
+        "Explore. Innovate. Connect."
+    ];
+
+    let textIndex = 0;
+    let charIndex = 0;
+    const typingSpeed = 120; // Typing speed
+    const erasingSpeed = 60; // Erasing speed
+    const delayBetweenTexts = 1500; // Delay before erasing
+    const typingTextElement = document.getElementById("typingText");
+
+    function typeEffect() {
+        if (charIndex < texts[textIndex].length) {
+            typingTextElement.innerHTML += texts[textIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(typeEffect, typingSpeed);
+        } else {
+            setTimeout(eraseEffect, delayBetweenTexts);
+        }
+    }
+
+    function eraseEffect() {
+        if (charIndex > 0) {
+            typingTextElement.innerHTML = texts[textIndex].substring(0, charIndex - 1);
+            charIndex--;
+            setTimeout(eraseEffect, erasingSpeed);
+        } else {
+            textIndex = (textIndex + 1) % texts.length; // Move to next text
+            setTimeout(typeEffect, typingSpeed);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        setTimeout(typeEffect, 500); // Start typing effect after delay
+    });
+
     

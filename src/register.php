@@ -11,13 +11,12 @@
 
     <div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
         <!-- Go Back Button -->
-    <div class="absolute top-5 left-5">
-        <a href="index.html" 
-           class="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-semibold rounded-full shadow-md hover:scale-105 transition-transform duration-300 flex items-center space-x-2">
-            <i class="fas fa-arrow-left"></i> 
-            <span>Go Back</span>
-        </a>
-    </div>
+        <nav class="bg-blue-600 text-white p-4 shadow-lg">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-3xl font-bold">ClubSphere</h1>
+                <a href="index.php" class="text-lg bg-white text-blue-600 px-4 py-2 rounded-md font-semibold hover:bg-gray-100 transition">Back to Home</a>
+            </div>
+        </nav>
         <!-- Event Details -->
         <h2 class="text-2xl font-bold text-center text-indigo-600">Register for the Event</h2>
         <p class="text-center text-gray-500 mb-6">Secure your spot now!</p>

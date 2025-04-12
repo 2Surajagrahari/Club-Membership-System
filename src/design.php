@@ -7,52 +7,38 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-6">
+<body>
+    <!-- Navigation -->
+    <nav class="bg-blue-600 text-white p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-bold">Design & Marketing</h1>
+            <a href="index.php" class="text-lg bg-white text-blue-600 px-4 py-2 rounded-md font-semibold hover:bg-gray-100 transition">Back to Home</a>
+        </div>
+    </nav>
 
-    <!-- Go Back Button -->
-    <div class="absolute top-5 left-5">
-        <a href="index.html" 
-           class="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-semibold rounded-full shadow-md hover:scale-105 transition-transform duration-300 flex items-center space-x-2">
-            <i class="fas fa-arrow-left"></i> 
-            <span>Go Back</span>
-        </a>
-    </div>
+    <!-- Upload Section -->
+    <div class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-6">
+        <div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md mb-10">
+            <h2 class="text-2xl font-bold text-center text-indigo-500">Upload Poster</h2>
+            <form id="posterForm">
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-medium">Poster Title</label>
+                    <input type="text" id="posterTitle" placeholder="Enter poster title" required class="w-full p-3 border rounded-md">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-medium">Upload Poster</label>
+                    <input type="file" id="posterImage" accept="image/*" required class="w-full p-3 border rounded-md">
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-md font-semibold shadow-md hover:scale-105 transition-transform duration-300">
+                    Upload Poster
+                </button>
+            </form>
+        </div>
 
-    <!-- Header Section -->
-    <div class="text-center mb-10">
-        <h1 class="text-4xl font-bold text-indigo-600">🎨 Design & Marketing</h1>
-        <p class="text-lg text-gray-500 mt-2">Create posters and promote club activities.</p>
-    </div>
-
-    <!-- Poster Upload Section -->
-    <div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md mb-10">
-        <h2 class="text-2xl font-bold text-center text-indigo-500">📌 Upload Poster</h2>
-
-        <form id="posterForm">
-            <!-- Poster Title -->
-            <div class="mb-4">
-                <label class="block text-gray-700 font-medium">Poster Title</label>
-                <input type="text" id="posterTitle" placeholder="Enter poster title" required class="w-full p-3 border rounded-md">
-            </div>
-
-            <!-- Image Upload -->
-            <div class="mb-4">
-                <label class="block text-gray-700 font-medium">Upload Poster</label>
-                <input type="file" id="posterImage" accept="image/*" required class="w-full p-3 border rounded-md">
-            </div>
-
-            <!-- Submit Button -->
-            <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-md font-semibold shadow-md hover:scale-105 transition-transform duration-300">
-                Upload Poster
-            </button>
-        </form>
-    </div>
-
-    <!-- Poster Gallery -->
-    <div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-3xl">
-        <h2 class="text-2xl font-bold text-center text-green-500">🖼 Poster Gallery</h2>
-        <div id="posterGallery" class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-            <!-- Posters will be dynamically added here -->
+        <!-- Poster Gallery -->
+        <div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-3xl">
+            <h2 class="text-2xl font-bold text-center text-green-500">Poster Gallery</h2>
+            <div id="posterGallery" class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6"></div>
         </div>
     </div>
 
@@ -72,11 +58,10 @@
 
             reader.onload = function(e) {
                 let imageBase64 = e.target.result;
-
                 let posters = JSON.parse(localStorage.getItem("posters")) || [];
 
                 let newPoster = {
-                    id: Date.now(),  // Unique ID for deletion
+                    id: Date.now(),
                     title: title,
                     image: imageBase64
                 };
@@ -85,8 +70,7 @@
                 localStorage.setItem("posters", JSON.stringify(posters));
 
                 alert("✅ Poster uploaded successfully!");
-                document.getElementById("posterForm").reset();
-                loadPosters();  // Refresh the poster gallery
+                window.location.href = "index.php";  // Redirect to homepage
             };
 
             reader.readAsDataURL(imageInput.files[0]);
@@ -98,7 +82,7 @@
             gallery.innerHTML = "";
 
             if (posters.length === 0) {
-                gallery.innerHTML = "<p class='text-center text-gray-500 col-span-3'>No posters uploaded yet.</p>";
+                gallery.innerHTML = "<p class='text-center text-gray-500 col-span-3'></p>";
                 return;
             }
 
@@ -110,7 +94,7 @@
                     <img src="${poster.image}" alt="Poster Image" class="w-full h-40 object-cover rounded-md mb-3">
                     <h3 class="text-lg font-bold text-center">${poster.title}</h3>
                     <button onclick="deletePoster(${poster.id})" class="mt-3 bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700">
-                        ❌ Delete
+                        Delete
                     </button>
                 `;
 
@@ -123,8 +107,7 @@
             let updatedPosters = posters.filter(poster => poster.id !== posterId);
 
             localStorage.setItem("posters", JSON.stringify(updatedPosters));
-            alert("🗑 Poster deleted successfully!");
-            loadPosters();
+            loadPosters(); // Refresh the gallery
         }
 
         document.addEventListener("DOMContentLoaded", loadPosters);

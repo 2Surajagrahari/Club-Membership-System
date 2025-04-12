@@ -12,7 +12,7 @@
     <div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
         <!-- Go Back Button -->
     <div class="absolute top-5 left-5">
-        <a href="index.html" 
+        <a href="index.php" 
            class="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-semibold rounded-full shadow-md hover:scale-105 transition-transform duration-300 flex items-center space-x-2">
             <i class="fas fa-arrow-left"></i> 
             <span>Go Back</span>

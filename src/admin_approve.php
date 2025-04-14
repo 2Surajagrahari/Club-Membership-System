@@ -28,7 +28,7 @@ if (isset($_GET["approve"])) {
             // Send confirmation email
             $subject = "ClubSphere Account Approved!";
             $message = "Hi $user_name,\n\nYour ClubSphere account has been approved. You can now log in.\n\nBest regards,\nClubSphere Team";
-            $headers = "From: no-reply@clubsphere.com";
+            $headers = "From: surajagrahari265@gmail.com";
             
             mail($user_email, $subject, $message, $headers);
             

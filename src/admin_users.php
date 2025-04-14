@@ -112,13 +112,13 @@ $users = $conn->query("SELECT id, name, email, role, approved,
     <div class="flex">
         <!-- Admin Sidebar -->
         <aside class="w-64 bg-gradient-to-b from-red-800 to-red-900 text-white min-h-screen p-6">
-            <h2 class="text-2xl font-bold mb-6">Admin Panel</h2>
+            <h2 class="text-2xl font-bold mb-6"><a href="index.php">ClubSphere</a></h2>
             <nav>
                 <ul>
                     <li class="mb-4"><a href="admin_dashboard.php" class="block p-2 hover:bg-white hover:text-red-900 rounded"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
                     <li class="mb-4"><a href="admin_approve.php" class="block p-2 hover:bg-white hover:text-red-900 rounded"><i class="fa-solid fa-user-check"></i> User Approvals</a></li>
                     <li class="mb-4"><a href="admin_users.php" class="block p-2 bg-white text-red-900 rounded"><i class="fa-solid fa-users"></i> Manage Users</a></li>
-                    <li class="mb-4"><a href="admin_events.php" class="block p-2 hover:bg-white hover:text-red-900 rounded"><i class="fa-solid fa-calendar"></i> Manage Events</a></li>
+                    <li class="mb-4"><a href="event_planning.php" class="block p-2 hover:bg-white hover:text-red-900 rounded"><i class="fa-solid fa-calendar"></i> Manage Events</a></li>
                     <li class="mb-4"><a href="dashboard.php" class="block p-2 hover:bg-white hover:text-red-900 rounded"><i class="fa-solid fa-user"></i> User View</a></li>
                     <li class="mb-4"><a href="databases.php?logout=true" class="block p-2 bg-red-600 rounded hover:bg-red-700"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
                 </ul>

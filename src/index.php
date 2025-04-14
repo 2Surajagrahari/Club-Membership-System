@@ -164,38 +164,39 @@ $result = $stmt->get_result();
     </div>
 
  <!-- Navbar -->
-<nav class="fixed top-0 left-0 w-full z-50 bg-black bg-opacity-50 backdrop-blur-md text-white p-4 shadow-lg transition-all duration-300">
+<nav class="fixed top-0 left-0 w-full z-50 bg-white text-gray-600 font-small p-4 shadow-lg transition-all duration-300">
     <div class="container mx-auto flex justify-between items-center">
         
         <!-- Logo -->
-        <h1 class="text-4xl font-bold pl-5 hover:text-gray-300 transition duration-300">
+        <h1 class="text-4xl font-semibold pl-5 text-black transition duration-300">
+        <i class="fas fa-globe text-4xl text-primary-300"></i>
             ClubSphere
         </h1>
 
         <!-- Navigation Links -->
-        <ul class="hidden md:flex pl-6 space-x-6 text-2xl gap-4">
+        <ul class="hidden md:flex pr-6 space-x-6 text-2xl gap-4">
             <li class="relative group">
-                <a href="#membership" class="relative pb-2 hover:text-blue-300 transition">
+                <a href="#membership" class="relative pb-2 hover:text-black transition">
                     Membership
-                    <span class="absolute left-1/2 bottom-0 w-0 h-1 bg-white rounded-full transition-all duration-300 ease-in-out transform -translate-x-1/2 group-hover:w-full"></span>
+                    <span class="absolute left-1/2 bottom-0 w-0 h-1 bg-blue-600 rounded-full transition-all duration-300 ease-in-out transform -translate-x-1/2 group-hover:w-full"></span>
                 </a>
             </li>
             <li class="relative group">
-                <a href="#dues" class="relative pb-2 hover:text-blue-300 transition">
+                <a href="#dues" class="relative pb-2 hover:text-black transition">
                     Dues
-                    <span class="absolute left-1/2 bottom-0 w-0 h-1 bg-white rounded-full transition-all duration-300 ease-in-out transform -translate-x-1/2 group-hover:w-full"></span>
+                    <span class="absolute left-1/2 bottom-0 w-0 h-1 bg-blue-600 rounded-full transition-all duration-300 ease-in-out transform -translate-x-1/2 group-hover:w-full"></span>
                 </a>
             </li>
             <li class="relative group">
-                <a href="#events" class="relative pb-2 hover:text-blue-300 transition">
+                <a href="#events" class="relative pb-2 hover:text-black transition">
                     Events
-                    <span class="absolute left-1/2 bottom-0 w-0 h-1 bg-white rounded-full transition-all duration-300 ease-in-out transform -translate-x-1/2 group-hover:w-full"></span>
+                    <span class="absolute left-1/2 bottom-0 w-0 h-1 bg-blue-600 rounded-full transition-all duration-300 ease-in-out transform -translate-x-1/2 group-hover:w-full"></span>
                 </a>
             </li>
             <li class="relative group">
-                <a href="#committees" class="relative pb-2 hover:text-blue-300 transition">
+                <a href="#committees" class="relative pb-2 hover:text-black transition">
                     Committees
-                    <span class="absolute left-1/2 bottom-0 w-0 h-1 bg-white rounded-full transition-all duration-300 ease-in-out transform -translate-x-1/2 group-hover:w-full"></span>
+                    <span class="absolute left-1/2 bottom-0 w-0 h-1 bg-blue-600 rounded-full transition-all duration-300 ease-in-out transform -translate-x-1/2 group-hover:w-full"></span>
                 </a>
             </li>
         </ul>
@@ -206,7 +207,7 @@ $result = $stmt->get_result();
 <!-- Show Profile Icon if Logged In -->
 <?php if (isset($_SESSION["user"])): ?>
     <a href="dashboard.php">
-        <img src="<?php echo isset($_SESSION['profile_image']) ? $_SESSION['profile_image'] : 'uploads/default.png'; ?>" width="50" height="50" style="border-radius: 50%;">
+        <img src="<?php echo isset($_SESSION['profile_image']) ? $_SESSION['profile_image'] : 'uploads/default.png'; ?>"  class="w-12 h-12 rounded-full border-2 border-white">
     </a>
 <?php else: ?>
     <!-- Login Button -->
@@ -256,9 +257,9 @@ $result = $stmt->get_result();
             <span id="typingText"></span><span class="cursor">|</span>
         </h2>
         <p class="mt-4 text-3xl drop-shadow-lg">Join us today and be part of an amazing community</p>
-        <a href="design.php" 
+        <a href="#membership" 
            class="mt-6 inline-block bg-white text-blue-600 px-6 py-3 rounded-lg font-bold shadow-md hover:bg-gray-100 transition duration-300 relative group w-40 text-center">
-            <span class="inline-block transition-opacity duration-300 group-hover:opacity-0 applyButton">Upload Poster</span>
+            <span class="inline-block transition-opacity duration-300 group-hover:opacity-0 applyButton">Apply now</span>
             <i class="fas fa-file-alt absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 text-2xl"></i>
         </a>
     </div>
@@ -583,7 +584,7 @@ $result = $stmt->get_result();
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
             <!-- Committee 1 -->
             <div class="relative bg-white rounded-lg shadow-lg overflow-hidden p-6 transition duration-300 transform hover:scale-105 hover:shadow-2xl">
-                <h3 class="text-2xl font-semibold text-gray-800">📢 Event Planning</h3>
+                <h3 class="text-2xl font-semibold text-gray-800"> Event Planning</h3>
                 <p class="text-gray-600 mt-2">Help organize and manage club events.</p>
                 <button class="mt-4 bg-blue-600 text-white px-5 py-2 rounded-md font-medium hover:bg-blue-700 transition duration-300"><a href="event_planning.php">
                     Customize Now</a>
@@ -592,7 +593,7 @@ $result = $stmt->get_result();
 
             <!-- Committee 2 -->
             <div class="relative bg-white rounded-lg shadow-lg overflow-hidden p-6 transition duration-300 transform hover:scale-105 hover:shadow-2xl">
-                <h3 class="text-2xl font-semibold text-gray-800">🎨 Design & Marketing</h3>
+                <h3 class="text-2xl font-semibold text-gray-800">Design & Marketing</h3>
                 <p class="text-gray-600 mt-2">Create posters and promote club activities.</p>
                 <button class="mt-4 bg-blue-600 text-white px-5 py-2 rounded-md font-medium hover:bg-blue-700 transition duration-300">
                     <a href="design.php">
@@ -602,7 +603,7 @@ $result = $stmt->get_result();
 
             <!-- Committee 3 -->
             <div class="relative bg-white rounded-lg shadow-lg overflow-hidden p-6 transition duration-300 transform hover:scale-105 hover:shadow-2xl">
-                <h3 class="text-2xl font-semibold text-gray-800">💼 Finance & Budgeting</h3>
+                <h3 class="text-2xl font-semibold text-gray-800">Finance & Budgeting</h3>
                 <p class="text-gray-600 mt-2">Manage club funds and financial planning.</p>
                 <button class="mt-4 bg-blue-600 text-white px-5 py-2 rounded-md font-medium hover:bg-blue-700 transition duration-300">
                     <a href="finance.php">Customize now</a>
@@ -623,11 +624,11 @@ $result = $stmt->get_result();
         <div class="text-left space-y-3">
             <p class="flex items-center space-x-2 text-sm">
                 <i class="fas fa-envelope text-lg text-yellow-300"></i>
-                <span class="hover:text-yellow-300 transition duration-300">support@clubsphere.com</span>
+                <span class="hover:text-yellow-300 transition duration-300">surajagrahari265@gmail.com</span>
             </p>
             <p class="flex items-center space-x-2 text-sm">
                 <i class="fas fa-map-marker-alt text-lg text-red-300"></i>
-                <span class="hover:text-red-300 transition duration-300">123 Tech Street, Innovation City</span>
+                <span class="hover:text-red-300 transition duration-300">Lovely Professional University Jalandhar, Punjab</span>
             </p>
             <p class="text-lg mt-2">&copy; 2025 ClubSphere. All rights reserved.</p>
         </div>
@@ -640,16 +641,16 @@ $result = $stmt->get_result();
 
         <!-- Right Side: Social Media Icons -->
         <div class="flex space-x-6 pr-12">
-            <a href="#" class="text-white text-xl transition-transform transform hover:scale-125">
-                <i class="fab fa-facebook"></i>
+            <a href="https://github.com/2Surajagrahari" class="text-white text-xl transition-transform transform hover:scale-125">
+                <i class="fab fa-github"></i>
             </a>
-            <a href="#" class="text-white text-xl transition-transform transform hover:scale-125">
+            <a href="https://www.instagram.com/surajagr_01/" class="text-white text-xl transition-transform transform hover:scale-125">
                 <i class="fab fa-instagram"></i>
             </a>
-            <a href="#" class="text-white text-xl transition-transform transform hover:scale-125">
+            <a href="https://x.com/surajagrahari01" class="text-white text-xl transition-transform transform hover:scale-125">
                 <i class="fab fa-twitter"></i>
             </a>
-            <a href="#" class="text-white text-xl transition-transform transform hover:scale-125">
+            <a href="https://www.linkedin.com/in/suraj-agraharii/" class="text-white text-xl transition-transform transform hover:scale-125">
                 <i class="fab fa-linkedin"></i>
             </a>
         </div>

@@ -21,9 +21,20 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 
+// Fetch Notifications
+$notifications_sql = "SELECT id, title, message, notification_type, created_at, status 
+                      FROM notifications 
+                      WHERE user_id = ? 
+                      ORDER BY created_at DESC 
+                      LIMIT 5";
+$notifications_stmt = $conn->prepare($notifications_sql);
+$notifications_stmt->bind_param("i", $_SESSION['user_id']);
+$notifications_stmt->execute();
+$notifications_result = $notifications_stmt->get_result();
+
 // Fetch User Data
 $user_email = $_SESSION["user"];
-$stmt = $conn->prepare("SELECT profile_image FROM users WHERE email = ?");
+$stmt = $conn->prepare("SELECT profile_image FROM users WHERE name = ?");
 $stmt->bind_param("s", $user_email);
 $stmt->execute();
 $stmt->bind_result($profile_image_path);
@@ -38,13 +49,12 @@ if (!$username) {
 
 // Default Profile Image
 $default_image = "uploads/default.png";
-
-// Determine which profile image to use
 $profile_image = $default_image; // Start with default
+// Determine which profile image to use
 
 if (!empty($profile_image_path)) {
     if (file_exists($profile_image_path)) {
-        $profile_image = $profile_image_path; // Use user's image if it exists
+        $profile_image = $profile_image_path; 
     }
 }
 
@@ -58,7 +68,7 @@ $stmt->close();
 
 $unread_notifications = $conn->query("SELECT COUNT(*) FROM notifications WHERE status = 'unread'")->fetch_row()[0];
 
-// Fetch upcoming events for the dashboard sidebar
+
 $today = date('Y-m-d');
 $events_sql = "SELECT id, event_name, event_date, event_location FROM events 
                WHERE event_date >= ? 
@@ -185,9 +195,8 @@ $activities = [
                 <ul class="space-y-2">
                     <li><a href="#" class="sidebar-item active"><i class="fa-solid fa-chart-line w-5"></i><span>Dashboard</span></a></li>
                     <li><a href="profile.php" class="sidebar-item"><i class="fa-solid fa-user w-5"></i><span>My Profile</span></a></li>
-                    <li><a href="event_planning.php" class="sidebar-item"><i class="fa-solid fa-calendar-days w-5"></i><span>Events</span></a></li>
-                    <li><a href="#" class="sidebar-item"><i class="fa-solid fa-users w-5"></i><span>Clubs</span></a></li>
-                    <li><a href="#" class="sidebar-item"><i class="fa-solid fa-bell w-5"></i><span>Notifications</span></a></li>
+                    <li><a href="Social.php" class="sidebar-item"><i class="fa-solid fa-plus w-6"></i><span>Post</span></a></li>
+                    
                     <li><a href="#" class="sidebar-item"><i class="fa-solid fa-gear w-5"></i><span>Settings</span></a></li>
                     <li class="mt-8"><a href="index.php" class="sidebar-item bg-white/10"><i class="fa-solid fa-house w-5"></i><span>Back to Home</span></a></li>
                     <li><a href="databases.php?logout=true" class="sidebar-item bg-red-600 hover:bg-red-700 text-white"><i class="fa-solid fa-right-from-bracket w-5"></i><span>Logout</span></a></li>
@@ -265,53 +274,106 @@ $activities = [
             
             <!-- Feature Cards Section -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div class="card-stats group">
-                    <i class="fas fa-user-plus card-icon text-blue-500"></i>
-                    <h3 class="text-gray-500 mb-1 text-sm">My Clubs</h3>
-                    <p class="text-2xl font-bold text-gray-800">5</p>
-                    <div class="mt-4 flex justify-between items-center">
-                        <span class="text-green-600 text-xs font-semibold flex items-center">
-                            <i class="fas fa-arrow-up mr-1"></i> 12% 
-                        </span>
-                        <a href="#" class="text-primary-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">View all →</a>
-                    </div>
-                </div>
                 
                 <div class="card-stats group">
                     <i class="fas fa-calendar-alt card-icon text-purple-500"></i>
                     <h3 class="text-gray-500 mb-1 text-sm">Events Attended</h3>
-                    <p class="text-2xl font-bold text-gray-800">12</p>
-                    <div class="mt-4 flex justify-between items-center">
-                        <span class="text-green-600 text-xs font-semibold flex items-center">
-                            <i class="fas fa-arrow-up mr-1"></i> 8% 
-                        </span>
-                        <a href="#" class="text-primary-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">View all →</a>
-                    </div>
+                    <p class="text-2xl font-bold text-gray-800">--</p>
+                    
                 </div>
                 
                 <div class="card-stats group">
                     <i class="fas fa-certificate card-icon text-indigo-500"></i>
                     <h3 class="text-gray-500 mb-1 text-sm">Achievements</h3>
-                    <p class="text-2xl font-bold text-gray-800">3</p>
+                    <p class="text-2xl font-bold text-gray-800">--</p>
                     <div class="mt-4 flex justify-between items-center">
                         <span class="text-gray-500 text-xs font-semibold flex items-center">
                             <i class="fas fa-minus mr-1"></i> New badge soon
                         </span>
-                        <a href="#" class="text-primary-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">View all →</a>
+                        
                     </div>
                 </div>
+                 <!-- Notifications Dropdown -->
+<div class="relative ml-auto mr-4">
+    <button id="notifications-btn" class="p-2 rounded-full hover:bg-gray-100 relative">
+        <i class="fas fa-bell text-gray-600"></i> <h3 class="text-gray-500 mb-1 text-sm">See Notifications</h3>
+        <?php if ($unread_notifications > 0): ?>
+        <span class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+            <?php echo $unread_notifications; ?>
+        </span>
+        <?php endif; ?>
+    </button>
+    
+    <div id="notifications-dropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl z-50 border border-gray-200">
+        <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+            <h3 class="font-semibold text-gray-800">Notifications</h3>
+            <a href="notifications.php" class="text-primary-600 text-sm">View All</a>
+        </div>
+        
+        <div class="max-h-96 overflow-y-auto">
+            <?php if ($notifications_result->num_rows > 0): ?>
+                <?php while ($notification = $notifications_result->fetch_assoc()): ?>
+                <div class="p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors <?php echo $notification['status'] === 'unread' ? 'bg-blue-50' : ''; ?>">
+                    <div class="flex items-start">
+                        <?php
+                        // Determine icon based on notification type
+                        $icon = 'fas fa-bell';
+                        $iconColor = 'text-primary-600';
+                        
+                        switch($notification['notification_type']) {
+                            case 'event':
+                                $icon = 'fas fa-calendar-alt';
+                                $iconColor = 'text-purple-600';
+                                break;
+                            case 'club':
+                                $icon = 'fas fa-users';
+                                $iconColor = 'text-blue-600';
+                                break;
+                            case 'system':
+                                $icon = 'fas fa-cog';
+                                $iconColor = 'text-gray-600';
+                                break;
+                            case 'membership':
+                                $icon = 'fas fa-id-card';
+                                $iconColor = 'text-green-600';
+                                break;
+                        }
+                        ?>
+                        <div class="mr-3 mt-1">
+                            <i class="<?php echo $icon; ?> <?php echo $iconColor; ?>"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-medium text-gray-800"><?php echo htmlspecialchars($notification['title']); ?></h4>
+                            <p class="text-sm text-gray-600 mt-1"><?php echo htmlspecialchars($notification['message']); ?></p>
+                            <div class="flex justify-between items-center mt-2">
+                                <span class="text-xs text-gray-500">
+                                    <?php 
+                                    $date = new DateTime($notification['created_at']);
+                                    echo $date->format('M j, g:i a'); 
+                                    ?>
+                                </span>
+                                <?php if ($notification['status'] === 'unread'): ?>
+                                <span class="text-xs bg-primary-100 text-primary-800 px-2 py-0.5 rounded-full">New</span>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <div class="p-6 text-center text-gray-500">
+                    <i class="fas fa-bell-slash text-3xl mb-2 opacity-30"></i>
+                    <p>No notifications yet</p>
+                </div>
+            <?php endif; ?>
+        </div>
+        
+        <div class="p-3 bg-gray-50 text-center">
+            <a href="notifications.php" class="text-primary-600 text-sm font-medium hover:underline">See all notifications</a>
+        </div>
+    </div>
+</div>
                 
-                <div class="card-stats group">
-                    <i class="fas fa-comments card-icon text-green-500"></i>
-                    <h3 class="text-gray-500 mb-1 text-sm">Discussions</h3>
-                    <p class="text-2xl font-bold text-gray-800">24</p>
-                    <div class="mt-4 flex justify-between items-center">
-                        <span class="text-red-600 text-xs font-semibold flex items-center">
-                            <i class="fas fa-arrow-down mr-1"></i> 3%
-                        </span>
-                        <a href="#" class="text-primary-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">View all →</a>
-                    </div>
-                </div>
             </div>
             
             <!-- Recent Activities and Upcoming Events -->
@@ -422,7 +484,7 @@ $activities = [
                     <?php endif; ?>
                 </div>
             </div>
-            
+           
             <!-- Footer -->
             <footer class="mt-8 text-center text-gray-500 text-sm py-6">
                 <p>© 2025 ClubSphere. All rights reserved.</p>
@@ -443,6 +505,17 @@ $activities = [
                 document.getElementById('mobile-menu').classList.remove('hidden');
             }
         });
+
+        // Notifications dropdown toggle
+document.getElementById('notifications-btn').addEventListener('click', function(e) {
+    e.stopPropagation();
+    document.getElementById('notifications-dropdown').classList.toggle('hidden');
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function() {
+    document.getElementById('notifications-dropdown').classList.add('hidden');
+});
     </script>
 </body>
 </html>

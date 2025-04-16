@@ -390,21 +390,24 @@ $result = $stmt->get_result();
         
         <!-- Left: Form -->
         <div class="bg-white bg-opacity-90 backdrop-blur-lg p-8 rounded-lg shadow-lg w-full lg:w-1/2 border border-gray-300">
-            <h2 class="text-3xl font-bold text-blue-600 mb-6 text-center">Membership Application</h2>
-            <span class="block w-20 h-1 bg-blue-500  mx-auto mb-2 rounded-full transition-transform duration-300 hover:w-24 hover:bg-blue-600"></span>
-            <label class="block mb-2 font-medium text-gray-700">Name</label>
-            <input type="text" class="w-full p-2 border rounded mb-4 focus:ring-2 focus:ring-blue-500" required>
-            
-            <label class="block mb-2 font-medium text-gray-700">Email</label>
-            <input type="email" class="w-full p-2 border rounded mb-4 focus:ring-2 focus:ring-blue-500" required>
+    <h2 class="text-3xl font-bold text-blue-600 mb-6 text-center">Membership Application</h2>
+    <span class="block w-20 h-1 bg-blue-500 mx-auto mb-2 rounded-full transition-transform duration-300 hover:w-24 hover:bg-blue-600"></span>
+    
+    <form action="process_membership.php" method="POST" enctype="multipart/form-data">
+        <label class="block mb-2 font-medium text-gray-700">Name</label>
+        <input type="text" name="name" class="w-full p-2 border rounded mb-4 focus:ring-2 focus:ring-blue-500" required>
+        
+        <label class="block mb-2 font-medium text-gray-700">Email</label>
+        <input type="email" name="email" class="w-full p-2 border rounded mb-4 focus:ring-2 focus:ring-blue-500" required>
 
-            <label class="block mb-2 font-medium text-gray-700">Why do you want to join?</label>
-            <textarea class="w-full p-2 border rounded mb-4 focus:ring-2 focus:ring-blue-500" required></textarea>
-            
-            <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-blue-700 transition duration-300 w-full flex items-center justify-center gap-2">
-                <i class="fas fa-paper-plane"></i> Submit
-            </button>
-        </div>
+        <label class="block mb-2 font-medium text-gray-700">Why do you want to join?</label>
+        <textarea name="message" class="w-full p-2 border rounded mb-4 focus:ring-2 focus:ring-blue-500" required></textarea>
+        
+        <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-blue-700 transition duration-300 w-full flex items-center justify-center gap-2">
+            <i class="fas fa-paper-plane"></i> Submit
+        </button>
+    </form>
+</div>
 
         <!-- Right: Image -->
         <div class="w-full lg:w-1/2 flex justify-center">
@@ -437,9 +440,9 @@ $result = $stmt->get_result();
                 <li>✅ Monthly newsletter</li>
                 <li>❌ Priority support</li>
             </ul>
-            <button class="mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 w-full flex items-center justify-center gap-2">
-                <a href="pay.php"><i class="fas fa-credit-card"></i>Pay Now</a>
-            </button>
+            <a href="pay.php"><button class="mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 w-full flex items-center justify-center gap-2">
+                <i class="fas fa-credit-card"></i>Pay Now
+            </button></a>
         </div>
 
         <!-- Standard Plan (Highlighted) -->
@@ -454,9 +457,9 @@ $result = $stmt->get_result();
                 <li>✅ Monthly newsletter</li>
                 <li>✅ Priority support</li>
             </ul>
-            <button class="mt-6 bg-white text-blue-600 px-6 py-3 rounded-lg shadow-md hover:bg-gray-200 transition duration-300 w-full flex items-center justify-center gap-2">
-                <a href="pay.php"><i class="fas fa-credit-card"></i>Pay Now</a>
-            </button>
+            <a href="pay.php"><button class="mt-6 bg-white text-blue-600 px-6 py-3 rounded-lg shadow-md hover:bg-gray-200 transition duration-300 w-full flex items-center justify-center gap-2">
+                <i class="fas fa-credit-card"></i>Pay Now
+            </button></a>
         </div>
 
         <!-- Premium Plan -->
@@ -470,9 +473,9 @@ $result = $stmt->get_result();
                 <li>✅ VIP event invitations</li>
                 <li>✅ 24/7 premium support</li>
             </ul>
-            <button class="mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 w-full flex items-center justify-center gap-2">
-                <a href="pay.php"><i class="fas fa-credit-card"></i>Pay Now</a>
-            </button>
+            <a href="pay.php"><button class="mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 w-full flex items-center justify-center gap-2">
+                <i class="fas fa-credit-card"></i>Pay Now
+            </button></a>
         </div>
 
     </div>
@@ -575,6 +578,8 @@ $result = $stmt->get_result();
 
 
     <!-- Committee Management Section -->
+<!-- Committee Management Section -->
+<?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
 <section id="committees" class="bg-gray-100 py-16">
     <div class="container mx-auto text-center">
         <h2 class="text-4xl font-bold text-gray-800 mb-4">Committee Management</h2>
@@ -612,6 +617,7 @@ $result = $stmt->get_result();
         </div>
     </div>
 </section>
+<?php endif; ?>
 <button id="scrollToTop" class="fixed bottom-6 right-6 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center  transition duration-300 shadow-[0px_5px_15px_rgba(0,0,0,0.35)] p-6  hover:bg-blue-700">
     ^
 </button>

@@ -1,3 +1,12 @@
+<?php
+session_start();
+require_once 'databases.php';
+
+// Generate CSRF token if not exists
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,15 +38,22 @@
     </script>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
- <!-- Go Back Button -->
- <div class="absolute top-5 left-5">
-            <a href="index.php" class="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-semibold rounded-full shadow-md hover:scale-105 transition-transform duration-300 flex items-center space-x-2">
-                <i class="fas fa-arrow-left"></i> 
-                <span>Go Back</span>
-            </a>
-        </div>
+    <!-- Go Back Button -->
+    <div class="absolute top-5 left-5">
+        <a href="index.php" class="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-semibold rounded-full shadow-md hover:scale-105 transition-transform duration-300 flex items-center space-x-2">
+            <i class="fas fa-arrow-left"></i> 
+            <span>Go Back</span>
+        </a>
+    </div>
+    
+    <!-- Payment Form Container -->
     <div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md relative">
-       
+        <?php if (isset($_SESSION['payment_error'])): ?>
+            <div class="mb-4 p-4 bg-red-100 text-red-700 rounded-lg">
+                <?php echo $_SESSION['payment_error']; ?>
+                <?php unset($_SESSION['payment_error']); ?>
+            </div>
+        <?php endif; ?>
 
         <!-- Payment Method Tabs -->
         <div class="flex border-b mb-6">
@@ -62,42 +78,52 @@
             <h2 class="text-2xl font-bold text-center text-indigo-500">Dues Payment</h2>
             <p class="text-center text-gray-500 mb-6">Secure card payment</p>
 
-            <form action="payment-process.php" method="POST">
+            <form action="databases.php" method="POST">
                 <input type="hidden" name="payment_method" value="card">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                 
                 <!-- Name -->
                 <div class="mb-4">
                     <label class="block text-gray-700 font-medium">Full Name</label>
-                    <input type="text" name="name" placeholder="Enter your name" required class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300">
+                    <input type="text" name="name" placeholder="Enter your name" required 
+                           class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300">
                 </div>
 
                 <!-- Email -->
                 <div class="mb-4">
                     <label class="block text-gray-700 font-medium">Email</label>
-                    <input type="email" name="email" placeholder="Enter your email" required class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300">
+                    <input type="email" name="email" placeholder="Enter your email" required 
+                           class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300">
                 </div>
 
                 <!-- Amount -->
                 <div class="mb-4">
                     <label class="block text-gray-700 font-medium">Amount (USD)</label>
-                    <input type="number" name="amount" placeholder="Enter amount" required class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300">
+                    <input type="number" name="amount" placeholder="Enter amount" required min="1" step="0.01"
+                           class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300">
                 </div>
 
                 <!-- Card Details -->
                 <div class="mb-4">
                     <label class="block text-gray-700 font-medium">Card Number</label>
-                    <input type="text" name="card_number" placeholder="1234 5678 9012 3456" required class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300">
+                    <input type="text" name="card_number" placeholder="1234 5678 9012 3456" 
+                           required class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300"
+                           pattern="\d{16}" title="Please enter a valid 16-digit card number">
                 </div>
 
                 <!-- Expiry & CVV -->
                 <div class="flex space-x-4 mb-4">
                     <div class="w-1/2">
                         <label class="block text-gray-700 font-medium">Expiry Date</label>
-                        <input type="text" name="expiry" placeholder="MM/YY" required class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300">
+                        <input type="text" name="expiry" placeholder="MM/YY" 
+                               required class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300"
+                               pattern="(0[1-9]|1[0-2])\/\d{2}" title="Please enter a valid expiry date in MM/YY format">
                     </div>
                     <div class="w-1/2">
                         <label class="block text-gray-700 font-medium">CVV</label>
-                        <input type="password" name="cvv" placeholder="***" required class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300">
+                        <input type="password" name="cvv" placeholder="***" 
+                               required class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300"
+                               pattern="\d{3,4}" title="Please enter a 3 or 4-digit CVV">
                     </div>
                 </div>
 
@@ -118,7 +144,6 @@
             <!-- QR Code Display -->
             <div class="flex justify-center mb-6">
                 <div class="border-2 border-dashed border-indigo-300 p-4 rounded-lg bg-indigo-50">
-                    <!-- Replace with your actual QR code image -->
                     <img src="QR.jpeg" alt="Payment QR Code" class="w-48 h-48 mx-auto">
                 </div>
             </div>
@@ -135,38 +160,43 @@
                 </ol>
             </div>
 
-            <form action="payment-process.php" method="POST">
+            <form action="databases.php" method="POST">
                 <input type="hidden" name="payment_method" value="qr">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                 
                 <!-- Name -->
                 <div class="mb-4">
                     <label class="block text-gray-700 font-medium">Full Name</label>
-                    <input type="text" name="name" placeholder="Enter your name" required class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300">
+                    <input type="text" name="name" placeholder="Enter your name" required 
+                           class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300">
                 </div>
 
                 <!-- Email -->
                 <div class="mb-4">
                     <label class="block text-gray-700 font-medium">Email</label>
-                    <input type="email" name="email" placeholder="Enter your email" required class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300">
+                    <input type="email" name="email" placeholder="Enter your email" required 
+                           class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300">
                 </div>
 
                 <!-- Amount -->
                 <div class="mb-4">
                     <label class="block text-gray-700 font-medium">Amount (USD)</label>
-                    <input type="number" name="amount" placeholder="Enter amount" required class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300">
+                    <input type="number" name="amount" placeholder="Enter amount" required min="1" step="0.01"
+                           class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300">
                 </div>
 
                 <!-- UTR Number -->
                 <div class="mb-4">
                     <label class="block text-gray-700 font-medium">UTR/Transaction Number</label>
-                    <input type="text" name="utr_number" placeholder="Enter your UTR number" required class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300">
+                    <input type="text" name="utr_number" placeholder="Enter your UTR number" required 
+                           class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300">
                     <p class="text-xs text-gray-500 mt-1">Found in your payment receipt or bank statement</p>
                 </div>
 
                 <!-- Submit Payment -->
                 <button type="submit" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-md font-semibold shadow-md hover:scale-105 hover:shadow-lg transition-transform duration-300 flex items-center justify-center space-x-2">
                     <i class="fa-solid fa-check-circle text-lg"></i>
-                    <span><a href="">Confirm Payment</a></span>
+                    <span>Confirm Payment</span>
                 </button>   
             </form>
         </div>
@@ -200,6 +230,16 @@
             cardTab.classList.add('text-gray-500');
             qrForm.classList.remove('hidden');
             cardForm.classList.add('hidden');
+        });
+
+        // Auto-format card number
+        document.querySelector('input[name="card_number"]')?.addEventListener('input', function(e) {
+            this.value = this.value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
+        });
+
+        // Auto-format expiry date
+        document.querySelector('input[name="expiry"]')?.addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').replace(/(\d{2})(\d)/, '$1/$2');
         });
     </script>
 </body>

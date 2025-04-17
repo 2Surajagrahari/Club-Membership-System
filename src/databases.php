@@ -373,31 +373,36 @@ function generateInvoiceHtml($name, $email, $amount, $payment_method, $transacti
 }
 
 function generatePdfInvoice($html, $invoice_number) {
-    require_once('vendor/tecnickcom/tcpdf/tcpdf.php');
+    // Require TCPDF library with correct path
+    require_once(__DIR__.'/../vendor/autoload.php');
     
+    // Create new PDF document
     $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-    $pdf->SetCreator('ClubSphere');
+    
+    // Set document information
+    $pdf->SetCreator(PDF_CREATOR);
+    $pdf->SetAuthor('ClubSphere');
     $pdf->SetTitle('Invoice '.$invoice_number);
+    $pdf->SetSubject('Membership Payment');
+    
+    // Remove default header/footer
     $pdf->setPrintHeader(false);
     $pdf->setPrintFooter(false);
+    
+    // Add a page
     $pdf->AddPage();
-    $pdf->writeHTML($html);
     
-    $pdf_path = "invoices/".$invoice_number.".pdf";
+    // Convert HTML to PDF
+    $pdf->writeHTML($html, true, false, true, false, '');
     
-    // Ensure directory exists
+    // Ensure invoices directory exists
+    $pdf_path = "invoices/{$invoice_number}.pdf";
     if (!file_exists('invoices')) {
-        mkdir('invoices', 0755, true);
+        mkdir('invoices', 0777, true);
     }
     
-    // Save to file
+    // Output PDF to file
     $pdf->Output(__DIR__.'/'.$pdf_path, 'F');
-    
-    // Verify PDF was created
-    if (!file_exists($pdf_path)) {
-        error_log("PDF generation failed for: ".$pdf_path);
-        throw new Exception("Failed to generate PDF");
-    }
     
     return $pdf_path;
 }
